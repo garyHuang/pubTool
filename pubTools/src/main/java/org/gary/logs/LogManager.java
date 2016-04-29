@@ -1,7 +1,9 @@
 package org.gary.logs;
 
 import org.apache.log4j.Logger;
-
+/**
+ * 写日志接口
+ * */
 public class LogManager {
 	static Logger logger = Logger.getLogger(LogManager.class);
 	public static void info(Object msg) {
