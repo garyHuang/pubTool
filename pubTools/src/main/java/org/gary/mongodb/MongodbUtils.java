@@ -116,7 +116,6 @@ public class MongodbUtils {
 		newDocument.append("$set", update ); 
 		
 		getMongoColl(tName); 
-		System.out.println( update );
 		mongoColl.updateMany( filter, newDocument ) ; 
 	}
 	
