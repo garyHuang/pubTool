@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -17,6 +18,8 @@ import com.mongodb.client.MongoDatabase;
  * 
  */
 public class MongodbUtils {
+	
+	protected static String _ID = "_id" ;
 	/**
 	 * mongdb地址
 	 * */
@@ -98,7 +101,11 @@ public class MongodbUtils {
 	
 	public void update(String tName,Map<String,Object> data , String updateKey){
 		BasicDBObject filter = new BasicDBObject();
-		filter.append(updateKey, data.get(filter) );
+		if(_ID.equalsIgnoreCase(updateKey)){
+			filter.append(updateKey, new ObjectId(String.valueOf(data.get(updateKey))) );
+		}else{
+			filter.append(updateKey, data.get(updateKey) );
+		}
 		BasicDBObject newDocument = new BasicDBObject();
 		BasicDBObject update = new BasicDBObject();
 		for(String key:data.keySet()){
@@ -110,7 +117,7 @@ public class MongodbUtils {
 		
 		getMongoColl(tName); 
 		System.out.println( update );
-		mongoColl.updateOne(filter, newDocument) ;
+		mongoColl.updateMany( filter, newDocument ) ; 
 	}
 	
 	protected void getMongoColl(String tName) {

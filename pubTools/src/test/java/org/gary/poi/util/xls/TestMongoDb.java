@@ -23,10 +23,11 @@ public class TestMongoDb {
 	
 	static void testUpdate() {
 		Map<String,Object> data2 = new HashMap<String, Object>();
-		data2.put("name", "name") ;
-		data2.put("age", 25 ) ;
-		data2.put("sex", 1 ) ;
-		mongodbUtils.update(tName, data2, "age");
+		data2.put("name", "gary0123") ;
+		data2.put("age", 333 ) ;
+		data2.put("sex", 22 ) ;
+		data2.put("_id", "5729f950f6111d095c664253" ) ;
+		mongodbUtils.update(tName, data2, "_id" ) ;
 	}
 
 	static void testSaves(){
