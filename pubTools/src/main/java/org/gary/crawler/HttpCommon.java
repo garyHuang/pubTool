@@ -135,6 +135,7 @@ public class HttpCommon {
 			}
 			response = httpclient.execute( httpget ) ;
 			Header[] allHeaders = response.getAllHeaders();
+			cookies.clear(); 
 			for(Header header : allHeaders){
 				String name = header.getName( );
 				if( name.indexOf(Holder.RESPONSE_COOKIE) > -1){
