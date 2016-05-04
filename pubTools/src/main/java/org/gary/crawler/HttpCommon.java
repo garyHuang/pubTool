@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
+import org.gary.comm.utils.UrlUtil;
 import org.gary.io.utils.StreamUtils;
 import org.gary.logs.LogManager;
 
@@ -109,13 +110,13 @@ public class HttpCommon {
 	
 	public List<CookieNameValuePair> cookies = new Vector<CookieNameValuePair>();
 	
-	
-
+	protected String host; 
 
 	public String requestGet(String url , String charSet){
 		CloseableHttpClient httpclient = HttpClients.createDefault();  
 		CloseableHttpResponse response = null ;
 		try {
+			host = UrlUtil.getHost( url ) ;
 			HttpGet httpget = new HttpGet( url );  
 			httpget.setHeader( Holder.HEADER_USER_AGENT ) ;
 			httpget.setHeader( Holder.HEADER_CONNECTION ) ;
@@ -123,7 +124,7 @@ public class HttpCommon {
 			httpget.setHeader( Holder.HEADER_ACCEPT ) ;
 			httpget.setHeader( Holder.HEADER_ACCEPT_ENCODING);
 			httpget.setHeader( Holder.HEADER_ACCEPT_LANGUAGE); 
-			StringBuffer buffer = new StringBuffer();
+			StringBuffer buffer = new StringBuffer(); 
 			for(CookieNameValuePair nameValuePair:cookies){
 				if(buffer.length() > 0){
 					buffer.append(";");
