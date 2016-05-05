@@ -21,9 +21,10 @@ bin/mongod --dbpath "/hksdata/mongodb/data/" --logpath "/hksdata/mongodb/logs/mo
 直接运行命令 mongodb 可默认链接本机的mongodb服务器
 #####a、常用命令
 > db.test.save( {"a":1 , "b":3}) //添加一条数据到test数据库
-db.test.find() //test表中所有数据
+db.test.find() //test集合中所有数据
 show dbs //显示当前所有的数据库
 use test //切换当前数据库
+db.joke.find().limit ( 2 ).skip( 100 ) ; // joke 集合名称，limit查询多少条，skip从多条开始
 
 ###3、linux 启动mongodb
  a、新建文件 mongodb.conf
