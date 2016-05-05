@@ -1,4 +1,4 @@
-﻿# mongodb
+# mongodb
 
 标签（空格分隔）： mongodb
 
@@ -25,4 +25,15 @@ db.test.find() //test表中所有数据
 show dbs //显示当前所有的数据库
 use test //切换当前数据库
 
-
+###3linux 启动mongodb
+ a、新建文件 mongodb.conf
+```
+dbpath=/hksdata/mongodb/data/ #数据文件目录
+logpath=/hksdata/mongodb/logs/mogondb.log #日志文件
+logappend=true #日志自动合并
+```
+b、启动mogodb
+--fork 为后台启动
+```
+bin/mongod -f mongodb.conf --fork
+```
