@@ -25,7 +25,7 @@ db.test.find() //test表中所有数据
 show dbs //显示当前所有的数据库
 use test //切换当前数据库
 
-###3linux 启动mongodb
+###3、linux 启动mongodb
  a、新建文件 mongodb.conf
 ```
 dbpath=/hksdata/mongodb/data/ #数据文件目录
