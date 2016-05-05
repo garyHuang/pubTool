@@ -87,7 +87,7 @@ public class DBUtils implements Serializable {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	/**
 	 * 查询返回所有结果集 最多返回1000条数据
 	 */
