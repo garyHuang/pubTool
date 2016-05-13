@@ -56,11 +56,10 @@ transport.tcp.port : 9300
 transport.tcp.compress : true
 #设置传输最大数据为100M
 http.max_content_length : 10mb
-# 启用对外http
+# 启用外部访问http
 http.enabled : true
 ```
 
 
-
-  [1]: http://static.zybuluo.com/Great-Chinese/130dknbwxaldacou2h5z6b50/014.png
-  [2]: http://static.zybuluo.com/Great-Chinese/8o09yieh7cv7n41h4dnnz4el/02.png
+[1]: http://static.zybuluo.com/Great-Chinese/130dknbwxaldacou2h5z6b50/014.png
+[2]: http://static.zybuluo.com/Great-Chinese/8o09yieh7cv7n41h4dnnz4el/02.png
