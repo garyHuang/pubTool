@@ -48,7 +48,7 @@ path.work : /hksdata/java/elasticsearch/tmp
 #日志文件路径
 path.log : /hksdata/java/elasticsearch/logs
 #设置绑定ip,多个ip用逗号隔开，默认为本地
-network.host : 10.163.101.230,120.27.43.49
+network.host : 10.163.101.230
 http.port : 9200
 transport.tcp.port : 9300 
 transport.tcp.compress : true
