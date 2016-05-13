@@ -36,11 +36,11 @@ public class ElasticsearchTest {
 		Map<String,Object> item = new HashMap<String,Object>();
 		item.put("name", "张三");
 		item.put("age", 19) ;
-		item.put("remark", "你好，我是搭街坊点解啊附近") ;
+		item.put("remark", "你好，我是奥迪") ;
 		item.put("sez", 1) ;
 		item.put("birthday", new Date()); 
 		
-		IndexRequestBuilder responseBuilder = client.prepareIndex("comment_index", "comment_ugc" , "comment_123675") ;
+		IndexRequestBuilder responseBuilder = client.prepareIndex("comment_index", "comment_ugc" , "comment_123677") ;
 		IndexResponse response = responseBuilder.setSource( item ).execute().actionGet( ); 
 		System.out.println( response.getId() );
 	}
