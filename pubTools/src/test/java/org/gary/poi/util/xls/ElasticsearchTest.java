@@ -22,7 +22,7 @@ public class ElasticsearchTest {
 	public static void main(String[] args) throws Exception {
 		testSave();
 		
-		query() ;
+		//query() ;
 	}
 	
 	static void query(){
@@ -34,13 +34,13 @@ public class ElasticsearchTest {
 		TransportClient client = getTransportClient();
 		
 		Map<String,Object> item = new HashMap<String,Object>();
-		item.put("name", "张三");
-		item.put("age", 19) ;
+		item.put("name", "gary");
+		item.put("age", 22) ;
 		item.put("remark", "你好，我是奥迪") ;
 		item.put("sez", 1) ;
 		item.put("birthday", new Date()); 
 		
-		IndexRequestBuilder responseBuilder = client.prepareIndex("comment_index", "comment_ugc" , "comment_123677") ;
+		IndexRequestBuilder responseBuilder = client.prepareIndex("comment_index", "comment_ugc" , "comment_123678") ;
 		IndexResponse response = responseBuilder.setSource( item ).execute().actionGet( ); 
 		System.out.println( response.getId() );
 	}
@@ -49,7 +49,7 @@ public class ElasticsearchTest {
 	 static TransportClient getTransportClient() throws UnknownHostException {
 		Builder builder = Settings.builder().put("cluster.name", "hks"); 
 		TransportClient client = TransportClient.builder().settings(builder).build()
-				.addTransportAddress(new InetSocketTransportAddress( InetAddress.getByName("120.27.43.49") , 9300));
-		return client;
+				.addTransportAddress(new InetSocketTransportAddress( InetAddress.getByName("120.27.43.49") , 9300))  ;
+		return client ; 
 	}
 }
