@@ -2,7 +2,9 @@
 
 标签（空格分隔）： Elasticsearch
 
+
 [TOC]
+
 
 ---
 ##1、下载
@@ -54,11 +56,21 @@ transport.tcp.port : 9300
 transport.tcp.compress : true
 #设置传输最大数据为100M
 http.max_content_length : 10mb
-# 启用对外http
+# 启用外部访问http
 http.enabled : true
 ```
 
+---
+git提交代码无密码配置
+1、进入到系统当前用户的目录，win7超级管理员目录为：C:\Users\Administrator
+2、创建文件： _netrc
+3、内容为：(#后面的字符不要填入文件内)
+```
+machine garyHuang.github.com #garyHuang为git显示名称
+login 834865081@qq.com  #邮箱为账号
+password pwd  #密码
+```
 
 
-  [1]: http://static.zybuluo.com/Great-Chinese/130dknbwxaldacou2h5z6b50/014.png
-  [2]: http://static.zybuluo.com/Great-Chinese/8o09yieh7cv7n41h4dnnz4el/02.png
+[1]: http://static.zybuluo.com/Great-Chinese/130dknbwxaldacou2h5z6b50/014.png
+[2]: http://static.zybuluo.com/Great-Chinese/8o09yieh7cv7n41h4dnnz4el/02.png

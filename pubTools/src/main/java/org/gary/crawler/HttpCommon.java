@@ -28,6 +28,11 @@ public class HttpCommon {
 		
 		private String value ; 
 		
+		private String domain;
+		
+
+		private String expires;
+		
 		private String path ;
 		
 		public String trim(String value){
@@ -52,7 +57,9 @@ public class HttpCommon {
 					if(Holder.RESPONSE_COOKIE_PATH.equalsIgnoreCase( head0 ) ){
 						this.path = head1; 
 					}else if(Holder.RESPONSE_COOKIE_DOMAIN.equalsIgnoreCase( head0 )){
+						this.domain = head1 ;
 					}else if(Holder.RESPONSE_COOKIE_EXPIRES.equalsIgnoreCase(head0)){
+						this.expires = head1 ; 
 					}else{
 						this.name = head0 ;
 						this.value = head1 ;
@@ -76,7 +83,14 @@ public class HttpCommon {
 		public String getName() {
 			return name;
 		}
-		
+
+		public String getDomain() {
+			return domain;
+		}
+
+		public String getExpires() {
+			return expires;
+		}
 		public String getValue() {
 			return value;
 		}
