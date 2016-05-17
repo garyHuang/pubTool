@@ -34,7 +34,8 @@ public class ElasticsearchTest {
 		SearchResponse response = client.prepareSearch("comment_index")
 				.setTypes("comment_ugc")
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(QueryBuilders.termQuery("remark", "你")) // Query
+				.setQuery(QueryBuilders.termQuery("remark", "你"))
+				.setQuery(QueryBuilders.termQuery("sez", "1"))
 				.setFrom(0).setSize(60).setExplain(true).execute().actionGet();
 		SearchHits searchHits = response.getHits();
 		System.out.println(searchHits.getTotalHits());
@@ -58,7 +59,7 @@ public class ElasticsearchTest {
 		item.put("birthday", new Date());
 
 		IndexRequestBuilder responseBuilder = client.prepareIndex(
-				"comment_index", "comment_ugc", "comment_123677");
+				"comment_index", "comment_ugc", "comment_123688");
 		IndexResponse response = responseBuilder.setSource(item).execute()
 				.actionGet();
 		System.out.println(response.getId());
