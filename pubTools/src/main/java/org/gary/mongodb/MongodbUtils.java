@@ -1,5 +1,6 @@
 package org.gary.mongodb;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -9,6 +10,8 @@ import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 /***
@@ -60,7 +63,7 @@ public class MongodbUtils {
 		this.host = host ; 
 		this.port = port ;
 		mongoClient = new MongoClient(host , port );
-		mongoDatabase = mongoClient.getDatabase( dbName ) ; 
+		mongoDatabase = mongoClient.getDatabase( dbName ) ;  
 	}
 	/**
 	 * 创建一个mongodb客户端 用户名 密码
@@ -71,7 +74,9 @@ public class MongodbUtils {
 		this.port = port ;
 		this.user = user ; 
 		this.pwd = pwd ; 
-		mongoClient = new MongoClient(host , port );
+		MongoCredential credential = MongoCredential.createMongoCRCredential( user, dbName , user.toCharArray() ) ; 
+		mongoClient = new MongoClient(Arrays.asList(new ServerAddress( host ,port)), Arrays.asList(credential) ) ;  
+		
 		mongoDatabase = mongoClient.getDatabase( dbName ) ; 
 	}
 	/**
@@ -122,4 +127,5 @@ public class MongodbUtils {
 	protected void getMongoColl(String tName) {
 		mongoColl = mongoDatabase.getCollection( tName ) ;
 	}
+	
 }
