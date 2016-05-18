@@ -74,7 +74,7 @@ public class MongodbUtils {
 		this.port = port ;
 		this.user = user ; 
 		this.pwd = pwd ; 
-		MongoCredential credential = MongoCredential.createMongoCRCredential( user, dbName , user.toCharArray() ) ; 
+		MongoCredential credential = MongoCredential.createCredential( user, dbName ,  pwd.toCharArray() ) ; 
 		mongoClient = new MongoClient(Arrays.asList(new ServerAddress( host ,port)), Arrays.asList(credential) ) ;  
 		
 		mongoDatabase = mongoClient.getDatabase( dbName ) ; 
