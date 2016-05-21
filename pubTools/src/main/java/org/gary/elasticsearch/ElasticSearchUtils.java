@@ -64,7 +64,9 @@ public class ElasticSearchUtils {
 			throw new RuntimeException( e.getMessage() , e )  ;
 		}
 	}
-	
+	/**
+	 * 分页查询方法
+	 * */
 	public ElasticResponse query(int from ,int size , SearchType searchType , QueryBuilder[]builders){
 		SearchRequestBuilder requestBuilder = client.prepareSearch( index )
 		.setTypes( type ) .setSearchType(searchType).setFrom(from)
