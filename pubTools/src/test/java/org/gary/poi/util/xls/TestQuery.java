@@ -20,7 +20,7 @@ public class TestQuery {
 		//QueryBuilders.fuzzyQuery ("keyword", "制动")
 		
 		ElasticResponse query = searchUtils.query(0, 10 , SearchType.DFS_QUERY_THEN_FETCH , new QueryBuilder[]{
-				QueryBuilders.queryStringQuery("换档控制壳体托架总")
+				QueryBuilders.queryStringQuery("(30克)")
 		}) ;
 		
 		
