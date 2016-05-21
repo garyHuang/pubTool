@@ -15,6 +15,7 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.metrics.tophits.TopHitsBuilder;
 
 public class ElasticSearchUtils {
 	
@@ -71,6 +72,29 @@ public class ElasticSearchUtils {
 		SearchRequestBuilder requestBuilder = client.prepareSearch( index )
 		.setTypes( type ) .setSearchType(searchType).setFrom(from)
 		.setSize(size) ;
+		for(QueryBuilder builder:builders){
+			requestBuilder.setQuery(builder);
+		}
+		SearchResponse actionGet = requestBuilder.setExplain(true).execute().actionGet();
+		ElasticResponse elasticResponse = new ElasticResponse();
+		SearchHits searchHits =  actionGet.getHits() ;
+		elasticResponse.setTotlePage( searchHits.getTotalHits() );
+		SearchHit[] hits = searchHits.getHits();
+		for (SearchHit hit : hits) {
+			elasticResponse.getDatas().add( hit.getSource() );
+		}
+		return elasticResponse;
+	}
+	
+	
+	/**
+	 * 分页查询方法
+	 * */
+	public ElasticResponse queryGroup(int from ,int size ,   QueryBuilder[]builders){
+		SearchRequestBuilder requestBuilder = client.prepareSearch( index )
+		.setTypes( type ) .setSearchType(SearchType.QUERY_THEN_FETCH ).setFrom(from)
+		.setSize(size) ;
+		requestBuilder.addAggregation(new TopHitsBuilder("partid")) ;	
 		for(QueryBuilder builder:builders){
 			requestBuilder.setQuery(builder);
 		}
