@@ -80,7 +80,7 @@ public class ElasticsearchTest {
 				.build()
 				.addTransportAddress(
 						new InetSocketTransportAddress(InetAddress
-								.getByName("120.27.43.49"), 9300));
+								.getByName("10.163.101.230"), 9300));
 		return client;
 	}
 	
