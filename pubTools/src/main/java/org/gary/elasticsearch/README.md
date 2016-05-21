@@ -5,6 +5,14 @@
 [TOC]
 
 ---
+
+##集群健康值说明:
+```
+红色,代表集群不可用
+黄色,代表集群可用不可复制
+绿色,代表集群正常
+```
+
 ##1、下载
 https://www.elastic.co/downloads/elasticsearch
 ##2、安装
