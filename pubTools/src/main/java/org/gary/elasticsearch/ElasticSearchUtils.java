@@ -5,10 +5,16 @@ import java.util.Map;
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.settings.Settings.Builder;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 
 public class ElasticSearchUtils {
 	
@@ -57,6 +63,24 @@ public class ElasticSearchUtils {
 		} catch(Exception e ) {
 			throw new RuntimeException( e.getMessage() , e )  ;
 		}
+	}
+	
+	public ElasticResponse query(int from ,int size , SearchType searchType , QueryBuilder[]builders){
+		SearchRequestBuilder requestBuilder = client.prepareSearch( index )
+		.setTypes( type ) .setSearchType(searchType).setFrom(from)
+		.setSize(size) ;
+		for(QueryBuilder builder:builders){
+			requestBuilder.setQuery(builder);
+		}
+		SearchResponse actionGet = requestBuilder.setExplain(true).execute().actionGet();
+		ElasticResponse elasticResponse = new ElasticResponse();
+		SearchHits searchHits =  actionGet.getHits() ;
+		elasticResponse.setTotlePage( searchHits.getTotalHits() );
+		SearchHit[] hits = searchHits.getHits();
+		for (SearchHit hit : hits) {
+			elasticResponse.getDatas().add( hit.getSource() );
+		}
+		return elasticResponse;
 	}
 	/**
 	 * 保存数据到集群环境中
