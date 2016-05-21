@@ -2,9 +2,7 @@
 
 标签（空格分隔）： Elasticsearch
 
-
 [TOC]
-
 
 ---
 ##1、下载
@@ -50,27 +48,21 @@ path.work : /hksdata/java/elasticsearch/tmp
 #日志文件路径
 path.log : /hksdata/java/elasticsearch/logs
 #设置绑定ip,多个ip用逗号隔开，默认为本地
-network.host : 10.163.101.230
+network.host : 10.163.101.230,120.27.43.49
 http.port : 9200
 transport.tcp.port : 9300 
 transport.tcp.compress : true
 #设置传输最大数据为100M
 http.max_content_length : 10mb
-# 启用外部访问http
+# 启用对外http
 http.enabled : true
+
+#es集群配置，数据自动复制
+discovery.zen.minimum_master_nodes: 2
+discovery.zen.ping.timeout: 10s
+discovery.zen.ping.multicast.enabled: true
+discovery.zen.ping.unicast.hosts: ["10.163.101.230" , "10.45.19.14"]
 ```
 
----
-git提交代码无密码配置
-1、进入到系统当前用户的目录，win7超级管理员目录为：C:\Users\Administrator
-2、创建文件： _netrc
-3、内容为：(#后面的字符不要填入文件内)
-```
-machine garyHuang.github.com #garyHuang为git显示名称
-login 834865081@qq.com  #邮箱为账号
-password pwd  #密码
-```
-
-
-[1]: http://static.zybuluo.com/Great-Chinese/130dknbwxaldacou2h5z6b50/014.png
-[2]: http://static.zybuluo.com/Great-Chinese/8o09yieh7cv7n41h4dnnz4el/02.png
+  [1]: http://static.zybuluo.com/Great-Chinese/130dknbwxaldacou2h5z6b50/014.png
+  [2]: http://static.zybuluo.com/Great-Chinese/8o09yieh7cv7n41h4dnnz4el/02.png
