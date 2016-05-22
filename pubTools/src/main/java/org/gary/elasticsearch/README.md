@@ -35,8 +35,10 @@ https://www.elastic.co/downloads/marvel
 
 
 ##3、启动
-> bin/elasticsearch
+```
+bin/elasticsearch
 bin/elasticsearch -d #后台启动
+```
 
 ##4、基本配置
 ***冒号后面必需预留一个空格***
