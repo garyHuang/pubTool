@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.gary.comm.utils.KeyValue;
 import org.gary.jdbcs.AlibabaJdbc;
 import org.gary.logs.LogManager;
 
@@ -104,7 +104,7 @@ public class DBUtils implements Serializable {
 				columns = ArrayUtils.add(columns, rsmd.getColumnLabel(x + 1));
 			}
 			while (rs.next()) {
-				Map<String, Object> map = new HashMap<String, Object>();
+				Map<String, Object> map = new KeyValue<Object>(); 
 				for (int x = 0; x < columnCount; x++) {
 					map.put(columns[x], rs.getObject(x + 1));
 				}
@@ -152,5 +152,7 @@ public class DBUtils implements Serializable {
 			ps.setObject(x + 1, param[x]);
 		}
 	}
-
+	
+	
+	
 }
