@@ -1,18 +1,23 @@
 package org.gary.mongodb;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 /***
  * 
@@ -85,7 +90,10 @@ public class MongodbUtils {
 	public void save(String tName , Map<String,Object> objs){
 		Document document = new Document();
 		for(String key:objs.keySet()){
-			document.append(key , objs.get( key ) );
+			Object val = objs.get( key ) ;
+			if(null != val){
+				document.append(key , val );
+			}
 		}
 		getMongoColl(tName); 
 		mongoColl.insertOne( document );
@@ -104,6 +112,32 @@ public class MongodbUtils {
 		mongoColl.insertMany( docs ) ;
 	}
 	
+	/**
+	 * 通用查询方法
+	 * */
+	public List<Map<String,Object>> query(String tName , Bson bson){
+		getMongoColl( tName ); 
+		List<Map<String,Object>> results = new Vector<Map<String,Object>>();
+		FindIterable<Document> datas = null ;
+		if( bson != null){
+			datas = mongoColl.find( bson ) ;
+		}else{
+			datas = mongoColl.find( ) ; 
+		}
+		MongoCursor<Document> iterator = datas.iterator() ;
+		while( iterator.hasNext() ){
+			Document next = iterator.next() ;
+			Map<String,Object> itemMap = new HashMap<String, Object>();
+			for(Entry<String, Object> entry : next.entrySet()){
+				itemMap.put(entry.getKey() , entry.getValue() );
+			}
+			results.add( itemMap );
+		}
+		return results ; 
+	}
+	/**
+	 * 修改记录
+	 * */
 	public void update(String tName,Map<String,Object> data , String updateKey){
 		BasicDBObject filter = new BasicDBObject();
 		if(_ID.equalsIgnoreCase(updateKey)){
