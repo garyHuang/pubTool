@@ -1,5 +1,6 @@
 package org.gary.poi.util.xls;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -20,6 +21,11 @@ public class TestQuery {
 						"haokuaisheng", "part", "partid");
 		
 		//QueryBuilders.fuzzyQuery ("keyword", "制动")
+		Map<String, Object> search_params = new HashMap<String, Object>();
+		search_params.put("from", 1);
+		search_params.put("size", 5);
+		search_params.put("keyword", "0002-205\\/55R16");
+		
 		
 		ElasticResponse query = searchUtils.query(0, 1554 , SearchType.DFS_QUERY_THEN_FETCH , new QueryBuilder[]{
 				QueryBuilders.queryStringQuery("0002-205\\/55R16")
