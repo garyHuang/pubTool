@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.gary.comm.utils.KeyValue;
+import org.gary.comm.utils.TransformUtils;
 import org.gary.jdbcs.AlibabaJdbc;
 import org.gary.logs.LogManager;
 
@@ -37,6 +38,81 @@ public class DBUtils implements Serializable {
 	public static DBUtils getDBUtil() {
 		DBUtils utils = new DBUtils();
 		return utils;
+	}
+	
+	/**
+	 * 查询返回所有结果集 最多返回1000条数据
+	 * 
+	 */
+	public List<Object> getResultToList(String sql, Object... param) {
+		List<Object> results = new Vector<Object>();
+		try {
+			createPs(sql);
+			setParam(ps, param);
+			rs = ps.executeQuery();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String[] columns = null;
+			int columnCount = rsmd.getColumnCount();
+			for (int x = 0; x < columnCount; x++) {
+				columns = ArrayUtils.add(columns, rsmd.getColumnLabel(x + 1));
+			}
+			while (rs.next()) {
+				results.add(rs.getObject(1));
+			}
+		} catch (Exception e) {
+			LogManager.err(e);
+			throw new RuntimeException(e);
+		} finally {
+			close(conn, ps, rs);
+		}
+		return results;
+	}
+	
+	public Map<String,Map<String,Object>> getResultToMap(String sql , String keyColName, Object... param) {
+		Map<String,Map<String,Object>> resultMap = new KeyValue<Map<String,Object>>();
+		try {
+			createPs(sql);
+			setParam(ps, param);
+			rs = ps.executeQuery();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String[] columns = null;
+			int columnCount = rsmd.getColumnCount();
+			for (int x = 0; x < columnCount; x++) {
+				columns = ArrayUtils.add(columns, rsmd.getColumnLabel(x + 1));
+			}
+			while (rs.next()) {
+				Map<String, Object> map = new KeyValue<Object>();
+				for (int x = 0; x < columnCount; x++) {
+					map.put(columns[x], rs.getObject(x + 1));
+				}
+				resultMap.put(TransformUtils.toString(map.get(keyColName) ), map);
+			}
+		} catch (Exception e) {
+			LogManager.err(e);
+			throw new RuntimeException(e);
+		} finally {
+			close(conn, ps, rs);
+		}
+		return resultMap ;
+	}
+	
+	public Object getObject(String sql, Object... param) {
+		Object ob = null;
+		try {
+			createPs(sql);
+			setParam(ps, param);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				ob = rs.getObject(1);
+			}
+		} catch (Exception e) {
+			LogManager.err(e);
+			throw new RuntimeException(e);
+		} finally {
+			close(conn, ps, rs);
+		}
+
+		return ob;
 	}
 
 	Connection conn = null;

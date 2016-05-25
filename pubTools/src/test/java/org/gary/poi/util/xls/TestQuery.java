@@ -27,15 +27,15 @@ public class TestQuery {
 		search_params.put("keyword", "0002-205\\/55R16");
 		
 		
-		ElasticResponse query = searchUtils.query(0, 1554 , SearchType.DFS_QUERY_THEN_FETCH , new QueryBuilder[]{
-				QueryBuilders.queryStringQuery("0002-205\\/55R16")
+		ElasticResponse query = searchUtils.query( 1 , 30 , SearchType.DFS_QUERY_THEN_FETCH , new QueryBuilder[]{
+				QueryBuilders.queryStringQuery("奥迪")
 		}) ;
 		
 		Set<Object> id2s = new HashSet<Object>();
 		for(Map<String,Object> data : query.getDatas()){
 			id2s.add( data.get("partid"));
+			System.out.println( data.get("partid") );
 		}
-		System.out.println( query.getTotlePage()); 
 		System.out.println("---------------" +id2s.size() );
 		
 	}
