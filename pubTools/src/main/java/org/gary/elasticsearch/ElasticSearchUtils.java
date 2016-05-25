@@ -121,5 +121,8 @@ public class ElasticSearchUtils {
 				.actionGet() ;
 	  return response.getId() ; 
 	}
-	
+
+	public TransportClient getClient() {
+		return client;
+	}
 }
