@@ -90,10 +90,10 @@ public class GIndex {
 				String groupid =  TransformUtils.toString(oeCodeCartype.get("groupid")) ;
 				String postion =  TransformUtils.toString(oeCodeCartype.get("postion")) ;
 				String picno =  TransformUtils.toString(oeCodeCartype.get("picno")) ;
-				oecodes.add( TransformUtils.toString(oeCodeCartype.get("oecode"))  );
-				codes.add( code );
-				picnos.add( picno ) ; 
-				groupids.add( groupid );
+				oecodes.add(  TransformUtils.toString(oeCodeCartype.get("oecode"))  );
+				codes.add(  code  );
+				picnos.add(  picno  ) ; 
+				groupids.add(groupid );
 				postions.add( postion ); 
 				String c3Id = TransformUtils.toString( oeCodeCartype.get("c3Id") ) ; 
 				cartypeCodes.add( c3Id );
