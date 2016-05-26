@@ -62,12 +62,10 @@ public class GIndex {
 				ElasticSearchSingle.getSearchUtils() ;
 		StringBuffer sqlBuffer = new StringBuffer(HKS_SQL);
 		
-		SqlUtil.appendSql(sqlBuffer, new SimpleCondition("materialcode" ,
+		List<Object> params = SqlUtil.appendSql(sqlBuffer, new SimpleCondition("materialcode" ,
 				SimpleCondition.Comparison.IN , materialCodes));
-		
-		sqlBuffer.append(" and materialcode in(").append(Helper.mergeString( materialCodes ))
-		.append(")");
-		List<Map<String, Object>> datas = DBUtils.getDBUtil().getResults( sqlBuffer.toString() ) ; 
+		List<Map<String, Object>> datas = DBUtils.getDBUtil().getResults( sqlBuffer.toString() , 
+				params.toArray() ) ; 
 		for(Map<String, Object> data:datas){
 			addCommParam(data);
 			searchUtils.save( data );
