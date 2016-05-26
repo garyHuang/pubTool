@@ -2,7 +2,7 @@ package org.gary.comm.utils;
 
 import java.security.MessageDigest;
 
-public class ShortChar {
+public class ShortUtils {
 	public static void main(String[] args) {
 		String sLongUrl = "3d";
 		System.out.println("字符串:" + sLongUrl);
