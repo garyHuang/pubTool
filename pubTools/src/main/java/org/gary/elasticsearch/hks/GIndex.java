@@ -105,7 +105,9 @@ public class GIndex {
 			data.put( KEY_RELATION_CODE , codes ); 
 			data.put( KEY_RELATION_GROUPID , groupids ) ;
 			data.put( KEY_RELATION_PICNO , picnos ) ; 
-			data.put( KEY_RELATION_OECODE , oecodes ) ; 
+			if(!Helper.isNull(oecodes)){
+				data.put( KEY_RELATION_OECODE , oecodes ) ; 
+			}
 			data.put( KEY_RELATION_POSTION , postions ) ;
 			data.put( KEY_RELATION_CARTYPECODE ,cartypeCodes ); 
 			if(!Helper.isNull(brandIds)){
