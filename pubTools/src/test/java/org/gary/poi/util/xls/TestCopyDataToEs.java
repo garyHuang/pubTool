@@ -32,7 +32,7 @@ public class TestCopyDataToEs {
 	public static void main(String[] args) {
 		final SynParts parts = new SynParts();
 		final TestCopyDataToEs quartz = new TestCopyDataToEs();
-		parts.setPageId( 1096 ) ;
+		parts.setPageId( 1044 ) ;
 		for(int x=0;x<50;x++){
 			new Thread(){
 				@Override
