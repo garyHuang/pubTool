@@ -130,7 +130,7 @@ public class GIndex {
 	 * */
 	protected static List<Map<String, Object>> getOeCodeCartypes(String oecode){
 		/*查询关系表的cartypecode和code*/
-		String queryCodeSql = "SELECT b.cartypecode, b.code , p.groupid,p.postion,p.picno FROM epc_relation b JOIN epc_partinfo p ON p.code = b.code WHERE OECode=?" ;
+		String queryCodeSql = "SELECT b.cartypecode, b.code , p.groupid,p.postion,p.picno,b.oecode FROM epc_relation b JOIN epc_partinfo p ON p.code = b.code WHERE OECode=?" ;
 		List<Map<String, Object>> results = DBUtils.getDBUtil().getResults(queryCodeSql , oecode ) ; 
 		if(Helper.isNull(results)){
 			return null ; 
