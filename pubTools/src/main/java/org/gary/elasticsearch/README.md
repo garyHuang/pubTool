@@ -53,7 +53,7 @@ path.data : /hksdata/java/elasticsearch/data
 #临时文件存储
 path.work : /hksdata/java/elasticsearch/tmp
 #日志文件路径
-path.log : /hksdata/java/elasticsearch/logs
+path.logs : /hksdata/java/elasticsearch/logs
 #设置绑定ip,多个ip用逗号隔开，默认为本地
 network.host : 10.163.101.230,120.27.43.49
 http.port : 9200
@@ -137,6 +137,7 @@ curl -XPUT http://10.163.101.230:9200/hksdata/ -d'
     }
 }'
 ```
+
   [1]: http://static.zybuluo.com/Great-Chinese/130dknbwxaldacou2h5z6b50/014.png
   [2]: http://static.zybuluo.com/Great-Chinese/z04ap0koqiaovevn3bwzfr7t/00.png
   [3]: http://static.zybuluo.com/Great-Chinese/9x39tisypkm6owo2elxdzyom/02.png
