@@ -14,7 +14,7 @@ make
 make install
 ```
 b、下载 hadoop-snappy
-    下载地址：https://github.com/garyHuang/snappy
+    下载地址：https://github.com/garyHuang/hadoop-snappy
 需要安装的软件：
     gcc c++, autoconf, automake, libtool, Java 6, JAVA_HOME set, Maven 3
 进入加压后的文件夹：
