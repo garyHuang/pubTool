@@ -1,6 +1,8 @@
 package org.gary.elasticsearch;
 
 import java.net.InetAddress;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
@@ -15,8 +17,14 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.metrics.tophits.TopHitsBuilder;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
+import org.gary.comm.utils.KeyValue;
+import org.gary.comm.utils.TransformUtils;
 
 public class ElasticSearchUtils {
 	
@@ -99,7 +107,6 @@ public class ElasticSearchUtils {
 		SearchRequestBuilder requestBuilder = client.prepareSearch( index )
 		.setTypes( type ) .setSearchType(SearchType.QUERY_THEN_FETCH ).setFrom(from)
 		.setSize(size) ;
-		requestBuilder.addAggregation(new TopHitsBuilder("partid")) ;	
 		for(QueryBuilder builder:builders){
 			requestBuilder.setQuery(builder);
 		}
@@ -126,7 +133,37 @@ public class ElasticSearchUtils {
 				.actionGet() ;
 	  return response.getId() ; 
 	}
-
+	
+	public  Map<String , Long > getGroup(QueryBuilder[]builders , 
+			String groupKey ){
+		Map<String ,  Long > resultMap = new KeyValue< Long>(); 
+		TermsBuilder  aggBuilder = AggregationBuilders.terms("agg").field( groupKey ) ; 
+		SearchRequestBuilder requestBuilder = client.prepareSearch( index )
+				.setTypes( type ) .setSearchType(SearchType.QUERY_THEN_FETCH ).setFrom( 0 )
+				.setSize( 200 ) ;
+		requestBuilder.addAggregation(  aggBuilder  ) ; 
+		SearchResponse sr = requestBuilder.execute().actionGet();
+		Map<String, Aggregation> aggMap = sr.getAggregations().asMap() ; 
+		if(null == aggMap){
+			return resultMap ; 
+		}
+		StringTerms aggTerms = (StringTerms) aggMap.get("oecodeAgg") ;
+		if(null == aggTerms){
+			return resultMap ; 
+		}
+		List<Bucket> buckets = aggTerms.getBuckets();
+		if(null == buckets){
+			return resultMap;
+		}
+		Iterator<Bucket> partIdBucketIt = buckets.iterator();
+		while(partIdBucketIt.hasNext()){
+			Bucket bucket = partIdBucketIt.next() ; 
+			resultMap.put(TransformUtils.toString(bucket.getKey() ) , bucket.getDocCount());
+		}
+		return resultMap ;  
+	}
+	
+	
 	public TransportClient getClient() {
 		return client;
 	}
