@@ -75,8 +75,7 @@ public class GIndex {
 	 
 	protected static void addCommParam(Map<String, Object> data){
 		List<Map<String, Object>> oeCodeCartypes = getOeCodeCartypes( TransformUtils.toString(data.get("OECode")));
-		data.put( KEY_SID , TransformUtils.toString(data.get("sid")) );  
-		 
+		data.put( KEY_SID , TransformUtils.toString(data.get("sid")) );   
 		Set<String>codes = new HashSet<String>();
 		Set<String>cartypeCodes = new HashSet<String>();
 		Set<String>brandIds = new HashSet<String>();

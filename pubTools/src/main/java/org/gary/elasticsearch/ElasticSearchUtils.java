@@ -16,6 +16,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.aggregations.metrics.tophits.TopHitsBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
 
 public class ElasticSearchUtils {
 	
@@ -68,12 +69,16 @@ public class ElasticSearchUtils {
 	/**
 	 * 分页查询方法
 	 * */
-	public ElasticResponse query(int from ,int size , SearchType searchType , QueryBuilder[]builders){
+	public ElasticResponse query(int from ,int size , SearchType searchType , SortBuilder sortBuilder
+			, QueryBuilder[]builders){
 		SearchRequestBuilder requestBuilder = client.prepareSearch( index )
 		.setTypes( type ) .setSearchType(searchType).setFrom(from)
 		.setSize(size) ;
 		for(QueryBuilder builder:builders){
 			requestBuilder.setQuery(builder);
+		}
+		if(null != sortBuilder){
+			requestBuilder.addSort( sortBuilder );
 		}
 		SearchResponse actionGet = requestBuilder.setExplain(true).execute().actionGet();
 		ElasticResponse elasticResponse = new ElasticResponse();
