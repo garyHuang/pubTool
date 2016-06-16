@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.hadoop.hdfs.server.datanode.dataNodeHome_jsp;
 import org.gary.comm.utils.Helper;
+import org.gary.comm.utils.KeyValue;
 import org.gary.comm.utils.TransformUtils;
 import org.gary.dbs.DBUtils;
 import org.gary.elasticsearch.ElasticSearchUtils;
@@ -75,6 +77,7 @@ public class GIndex {
 	protected static void addCommParam(Map<String, Object> data){
 		List<Map<String, Object>> oeCodeCartypes = getOeCodeCartypes( TransformUtils.toString(data.get("OECode")));
 		data.put( KEY_SID , TransformUtils.toString(data.get("sid")) );  
+		 
 		Set<String>codes = new HashSet<String>();
 		Set<String>cartypeCodes = new HashSet<String>();
 		Set<String>brandIds = new HashSet<String>();
@@ -82,8 +85,8 @@ public class GIndex {
 		Set<String>groupids = new HashSet<String>();
 		Set<String>postions = new HashSet<String>();
 		Set<String>picnos = new HashSet<String>();
-		Set<String>oecodes = new HashSet<String>();
-		
+		Set<String>oecodes = new HashSet<String>();  
+		data.putAll( queryPrice(TransformUtils.toString(data.get("materialcode"))) ); 
 		if(!Helper.isNull(oeCodeCartypes)){
 			for(Map<String, Object> oeCodeCartype:oeCodeCartypes){
 				String code =  TransformUtils.toString(oeCodeCartype.get("code")) ;
@@ -126,6 +129,29 @@ public class GIndex {
 		);
 	}
 	
+	public static Map<String,Object> queryPrice(String productCode){
+		String sql = "SELECT CustomerType1,CustomerType2,CustomerType3,CustomerType4,CustomerType5,CustomerType6,CustomerType7,CustomerType8,CustomerType9,CustomerType10,CustomerType11,CustomerType12,CustomerType13,CustomerType14,CustomerType15,CustomerType16,CustomerType17,CustomerType18,CustomerType19,CustomerType20,CustomerType21,CustomerType22,CustomerType23,CustomerType24,CustomerType25,CustomerType26,CustomerType27,CustomerType28,CustomerType29,CustomerType30 FROM jgzx.%s where ProductCode=? "  ;
+		Map<String, Object> dataMap = new KeyValue<Object>();
+		String queryTableNameSql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='jgzx' AND TABLE_NAME LIKE 'p10%';" ; 
+		List<Object> tableNames = DBUtils.getDBUtil().getResultToList( queryTableNameSql ) ; 
+		if(Helper.isNull(tableNames)){
+			return dataMap ; 
+		}
+		for(Object tableName:tableNames){
+			try {
+				String qSql = String.format( sql , TransformUtils.toString(tableName)  ) ;
+				Map<String, Object> result = DBUtils.getDBUtil().getResult( qSql , productCode ) ;
+				if(null != result){
+					for(String key : result.keySet() ){
+						double price = TransformUtils.toInt( result.get( key )) ;
+						dataMap.put(tableName + "_" + key , price > 0 ? 1 : 0) ;
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+		return dataMap ;
+	}
 	
 	/**
 	 * 获取 好快省编码 车型编码，品牌id 方法，根据oe号获取
