@@ -17,16 +17,12 @@ import org.gary.elasticsearch.ElasticSearchUtils;
 public class TestQueryGroup {
 	
 	public static void main(String[] args) {
-		ElasticSearchUtils searchUtils = ElasticSearchUtils
-				.getElasticSearch("hks", "10.163.101.230", 9300,
-						"hksdata", "part", "id"); 
-		SearchRequestBuilder srb = searchUtils.getClient().prepareSearch("hksdata");  
+		ElasticSearchUtils searchUtils = ElasticSearchSingle.getSearchUtils(); 
+		SearchRequestBuilder srb = searchUtils.getClient().prepareSearch("hksesdata");  
 		srb.setTypes("part"); 
 		srb.setSearchType( SearchType.QUERY_AND_FETCH ); 
 		srb.setQuery( QueryBuilders.matchAllQuery() );
-		
-		TermsBuilder partidTermsBuilder = AggregationBuilders.terms("oecodeAgg").field("relation_oecode");
-		
+		TermsBuilder  partidTermsBuilder = AggregationBuilders.terms("oecodeAgg").field("relation_postion") ;
 		partidTermsBuilder.size( 20 );
 		srb.addAggregation( partidTermsBuilder ) ;
 		
@@ -41,6 +37,5 @@ public class TestQueryGroup {
 		}
 		System.out.println( partidTerms.getBuckets().size() );
 		System.out.println( sr.getTookInMillis() );
-		
 	}
 }
