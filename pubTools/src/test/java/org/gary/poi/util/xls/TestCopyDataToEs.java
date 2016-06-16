@@ -34,7 +34,7 @@ public class TestCopyDataToEs {
 		final TestCopyDataToEs quartz = new TestCopyDataToEs();
 		parts.setPageId( 1 ) ;
 		
-		for(int x=0;x<50;x++){
+		for(int x=0;x<11;x++){
 			new Thread(){
 				@Override
 				public void run() {

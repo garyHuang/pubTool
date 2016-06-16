@@ -15,7 +15,7 @@ public class TestQuery001 {
 		
 		ElasticSearchUtils searchUtils = ElasticSearchSingle.getSearchUtils(); 
 		QueryStringQueryBuilder builder = new QueryStringQueryBuilder("\"1104-005\"");
-		ElasticResponse query = searchUtils.query( 0 , 2000 , SearchType.DEFAULT, new QueryBuilder[]{
+		ElasticResponse query = searchUtils.query( 0 , 2000 , SearchType.DEFAULT , null , new QueryBuilder[]{
 				builder
 		}) ;
 		for(Map<String,Object> data : query.getDatas()){
