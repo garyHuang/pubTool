@@ -68,6 +68,15 @@ public class DBUtils implements Serializable {
 		return results;
 	}
 	
+	
+	public Map<String, Object> getResult(String sql, Object... param) {
+		List<Map<String, Object>> results = getResults(sql, param);
+		if (results.isEmpty()) {
+			return null;
+		}
+		return results.get(0);
+	}
+	
 	public Map<String,Map<String,Object>> getResultToMap(String sql , String keyColName, Object... param) {
 		Map<String,Map<String,Object>> resultMap = new KeyValue<Map<String,Object>>();
 		try {
