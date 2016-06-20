@@ -23,7 +23,7 @@ public class TestQueryGroup {
 		srb.setSearchType( SearchType.QUERY_AND_FETCH ); 
 		srb.setQuery( QueryBuilders.matchAllQuery() );
 		TermsBuilder  partidTermsBuilder = AggregationBuilders.terms("oecodeAgg").field("relation_postion") ;
-		partidTermsBuilder.size( 20 );
+		partidTermsBuilder.size( 100 );
 		srb.addAggregation( partidTermsBuilder ) ;
 		
 		SearchResponse sr = srb.execute().actionGet();
